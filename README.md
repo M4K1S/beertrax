@@ -22,7 +22,7 @@ This was a fully solo engineering project. I independently designed, specified, 
 
 ## 📈 Impact
 
-- Used in a real bar for continuous multi-tap beverage tracking
+- Deployed in a live bar environment for continuous multi-tap beverage tracking across 8 independent flow lines.
 - Eliminated manual pour tracking across 8 taps simultaneously
 - Automated end-of-day reporting with printed receipts and timestamped SD card archives
 - Enabled full remote configuration and monitoring through a browser on any device on the local network
@@ -91,18 +91,18 @@ This was a fully solo engineering project. I independently designed, specified, 
 │  ┌───────▼─────────────────────────▼─────────────┐   │
 │  │              Main Control Logic               │   │
 │  │  (Count → Accumulate → Display → Log → Reset) │   │
-│  └───────┬─────────────┬──────────────┬──────────┘   │
-│          │             │              │              │
-│  ┌───────▼──┐  ┌───────▼──────┐  ┌───▼──────────┐   │
-│  │ Thermal  │  │  DS3231 RTC  │  │   SD Card    │   │
-│  │ Printer  │  │  NTP Sync    │  │  Autosave /  │   │
-│  │ Reports  │  │  EOD Timer   │  │  EOD Saves   │   │
-│  └──────────┘  └──────────────┘  └──────────────┘   │
+│  └───────┬─────────────┬─────────────┬───────────┘   │
+│          │             │             │               │
+│  ┌───────▼──┐  ┌───────▼──────┐  ┌───▼──────────┐    │
+│  │ Thermal  │  │  DS3231 RTC  │  │   SD Card    │    │
+│  │ Printer  │  │  NTP Sync    │  │  Autosave /  │    │
+│  │ Reports  │  │  EOD Timer   │  │  EOD Saves   │    │
+│  └──────────┘  └──────────────┘  └──────────────┘    │
 └──────────────────────────────────────────────────────┘
                           │ WiFi
           ┌───────────────▼──────────────┐
           │     Browser (any device)     │
-          │   http://<ESP32-IP>/         │
+          │      http://<ESP32-IP>/      │
           └──────────────────────────────┘
 ```
 
