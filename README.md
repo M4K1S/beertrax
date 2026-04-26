@@ -13,10 +13,10 @@ Beer Trax is an ESP32-based beverage flow tracking system designed for real bar 
 ## 🙋 What I Personally Built
 This was a fully solo engineering project. I independently designed, specified, programmed, and deployed the entire system end-to-end, and provided full hardware assembly instructions to the client who carried out the physical build.
 
-Embedded firmware (ESP32) — Developed the complete main.ino system, including 8-channel hardware pulse counting via the ESP32 PCNT peripheral, a full async web server hosting the admin dashboard, per-meter flow calibration, watchdog timer fault recovery, RTC-scheduled daily resets, SD card logging with autosave crash recovery, NTP time synchronization, and thermal printer integration
-Embedded web interface — Built a full admin dashboard served directly from the ESP32, with dynamically generated HTML, CSS, and JavaScript. Includes live flow meter totals, per-meter calibration, totalizer resets, tap renaming, unit toggling, Wi-Fi configuration, daily reset scheduling, and an SD card save browser
-Hardware design — Selected all components and designed the full electrical system, including 8 pulse-output flow sensor inputs with hardware glitch filtering, SPI SD card module, I2C DS3231 RTC, and Adafruit-compatible thermal printer
-Deployment — Delivered as a production-ready IoT system for real bar environments
+- Embedded firmware (ESP32) — Developed the complete main.ino system, including 8-channel hardware pulse counting via the ESP32 PCNT peripheral, a full async web server hosting the admin dashboard, per-meter flow calibration, watchdog timer fault recovery, RTC-scheduled daily resets, SD card logging with autosave crash recovery, NTP time synchronization, and thermal printer integration
+- Embedded web interface — Built a full admin dashboard served directly from the ESP32, with dynamically generated HTML, CSS, and JavaScript. Includes live flow meter totals, per-meter calibration, totalizer resets, tap renaming, unit toggling, Wi-Fi configuration, daily reset scheduling, and an SD card save browser
+- Hardware design — Selected all components and produced the complete wiring specification, pin mapping, and assembly instructions for the client to build from. Covers 8 pulse-output flow sensor inputs with hardware glitch filtering, SPI SD card module, I2C DS3231 RTC, and Adafruit-compatible thermal printer
+- Deployment — Delivered as a production-ready IoT system for a real bar environment, including remote configuration support and documentation
 
 ---
 
