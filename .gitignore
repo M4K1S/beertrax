@@ -1,0 +1,28 @@
+# Local credentials / secrets
+firmware/secrets.h
+secrets.h
+.env
+*.env
+
+# Arduino / ESP32 build artifacts
+*.bin
+*.elf
+*.map
+*.hex
+*.uf2
+build/
+.pio/
+
+# SD card runtime files copied for testing
+ssid.txt
+password.txt
+admincode.txt
+licence.txt
+Autosave.txt
+EOD_Saves/
+Manual_Saves/
+
+# Editor / OS files
+.vscode/
+.DS_Store
+__MACOSX/

@@ -1,75 +1,74 @@
-# Beer Trax — Web API Endpoints
+# BeerTrax — Web / Local API Notes
 
-All endpoints are served on port **80** over HTTP. Replace `<IP>` with the device's local IP address shown on the main page or serial monitor.
+All endpoints are served over local HTTP on port `80`.
+
+```text
+http://<ESP32-IP>/
+```
+
+These endpoints are intended for trusted local networks only.
 
 ---
 
-## Main Interface
+## Main Pages
 
-### `GET /`
-Returns the main web dashboard with current flow totals and menu.
-
-### `GET /admin?code=<adminCode>`
-Returns the admin panel. Requires the correct admin code (default: `1234`).
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/` | Main dashboard with current totals and quick actions |
+| `GET` | `/admin?code=<adminCode>` | Admin panel after PIN validation |
+| `GET` | `/previousSaves` | Display saved end-of-day report files from SD card |
 
 ---
 
 ## Printing
 
-### `GET /printflowdata`
-Prints the current flow meter totals to the thermal printer.
-
-### `GET /reprintNewest`
-Reprints the most recent EOD report from the SD card.
-
----
-
-## SD Card
-
-### `GET /previousSaves`
-Lists all saved EOD files on the SD card with links to view each one.
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/printflowdata` | Print current totals and save a manual snapshot |
+| `GET` | `/reprintNewest` | Reprint the newest saved EOD report |
 
 ---
 
 ## Calibration
 
-### `GET /calibrateMeter?meter=<0-7>`
-Opens the calibration page for the specified meter (0-indexed).
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/calibrateMeter?meter=<0-7>` | Open calibration page for the selected meter |
+| `POST` | `/startCalibration?meter=<0-7>` | Start calibration using the current pulse count as the baseline |
+| `POST` | `/stopCalibration?mlPoured=<volume>` | Stop calibration and save the calculated mL-per-pulse factor |
 
-### `GET /startCalibration?meter=<0-7>&amount=<ml>`
-Starts a calibration run for the specified meter with the target volume in mL.
-
-### `POST /stopCalibration`
-Stops the active calibration run, calculates the calibration factor, and saves it.
+Calibration endpoints require admin mode.
 
 ---
 
 ## Totalizer Control
 
-### `GET /resetTotalizer?resetTotalizer=<1-8>`
-Resets the specified flow meter totalizer to zero (1-indexed).
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/resetTotalizer?resetTotalizer=<1-8>` | Reset one meter totalizer |
+| `GET` | `/resetAll` | Reset all 8 meter totalizers |
 
-### `GET /resetAll`
-Resets all 8 flow meter totalizers to zero.
+Totalizer reset endpoints require admin mode.
 
 ---
 
 ## Configuration
 
-### `GET /setRTC`
-Sets the RTC clock to the compile-time timestamp (`__DATE__` / `__TIME__`).
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/setRTC` | Sync the DS3231 RTC from NTP time |
+| `GET` | `/setTimeOfDay?timeInput=<HH:MM:SS>` | Set the daily reset/print time |
+| `GET` | `/rename?renameMeter=<1-8>&newName=<name>` | Rename a flow meter |
+| `GET` | `/toggleUnits` | Toggle display units between mL and fl oz |
+| `GET` | `/changeWifi?newSSID=<ssid>&newPASS=<password>` | Update Wi-Fi credentials stored on SD card |
+| `GET` | `/updateLicence?licence=<key>` | Update the licence key stored on SD card |
 
-### `GET /setTimeOfDay?time=<HH:MM:SS>`
-Sets the scheduled daily reset and print time.
+Configuration endpoints require admin mode.
 
-### `GET /rename?meter=<0-7>&name=<name>`
-Renames the specified flow meter.
+---
 
-### `GET /toggleUnits`
-Toggles the display unit between **milliliters** and **fluid ounces**.
+## Notes
 
-### `GET /changeWifi?ssid=<ssid>&password=<password>`
-Updates the Wi-Fi credentials stored on the SD card. Takes effect after reboot.
-
-### `GET /updateLicence?key=<key>`
-Updates the licence key stored on the SD card.
+- Admin mode is enabled after visiting `/admin?code=<adminCode>` with the correct PIN.
+- This is a local-device interface, not a public internet API.
+- Query parameters are used for simplicity on an ESP32-hosted dashboard; do not expose the device on untrusted networks.

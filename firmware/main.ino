@@ -491,6 +491,7 @@ String generatePreviousSavesPage() {
       entry.close();
     }
     root.close();
+    std::sort(names.begin(), names.end());
     std::reverse(names.begin(), names.end());
 
     if (names.empty()) {
@@ -555,6 +556,7 @@ void handleCalibrateMeter(AsyncWebServerRequest* req) {
 }
 
 void handleStartCalibration(AsyncWebServerRequest* req) {
+  if (!adminMode) { req->send(403, "text/plain", "Access denied"); return; }
   int meter = req->arg("meter").toInt();
   if (meter < 0 || meter >= NUM_SENSORS) {
     req->send(400, "text/plain", "Invalid meter"); return;
@@ -567,6 +569,7 @@ void handleStartCalibration(AsyncWebServerRequest* req) {
 }
 
 void handleStopCalibration(AsyncWebServerRequest* req) {
+  if (!adminMode) { req->send(403, "text/plain", "Access denied"); return; }
   if (calibratingMeter == -1) {
     req->send(400, "text/plain", "No calibration in progress"); return;
   }
@@ -817,6 +820,7 @@ void reprintNewest() {
 
   if (names.empty()) { printer.println("No EOD saves found"); return; }
 
+  std::sort(names.begin(), names.end());
   String newest = names.back();
   printer.println("--- Beer Trax ---");
   printer.println("REPRINT: " + newest);
